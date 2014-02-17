@@ -21,8 +21,8 @@ class trie
 private:
 	string input;//The string which is used to set the architecture of the trie
 	int freq[];
-	int nodes;
-	node* root;
+	int nodeCount;
+	vector<node> nodes;
 public:
 	trie()
 	{
@@ -32,6 +32,7 @@ public:
 	void addNode(node add)
 	{
 
+		nodeCount++;
 	}
 
 
