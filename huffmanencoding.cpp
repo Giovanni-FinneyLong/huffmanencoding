@@ -1,10 +1,6 @@
 /*
  * huffmanencoding.cpp
-
- *
- *  Created on: Feb 14, 2014
- *      Author: Giorulesall
- */
+*/
 #include <iostream>
 #include <stdio.h>
 #include <string>
@@ -27,7 +23,7 @@ public:
 	trie()
 	{
 		freq = new int[27];//last index is for spaces
-		nodes = 0;
+		nodeCount = 0;
 	}
 	void addNode(node add)
 	{
@@ -103,16 +99,52 @@ private:
 
 
 public:
-node()
-{
-
-}
-node(node* p, node* l, node* r, int f)
+node(node* p, node* l, node* r,char c, int f)
 {
 	parent = p;
 	left = l;
 	right = r;
+	elem = c;
 	freq = f;
+}
+void setLeft(node* l)
+{
+	left = l;
+}
+void setRight(node* r)
+{
+	right = r;
+}
+void setParent(node* p)
+{
+	parent = p;
+}
+node* getLeft()
+{
+	return left;
+}
+node* getRight()
+{
+	return right;
+}
+node* getParent()
+{
+	return parent;
+}
+int getFreq()
+{
+	return freq;
+}
+char getChar()
+{
+	return elem;
+}
+char getElem()
+{
+	return getChar();
+}
+
+
 }
 
 
