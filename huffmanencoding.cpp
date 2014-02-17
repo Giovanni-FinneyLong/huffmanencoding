@@ -7,10 +7,82 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
+#include <math.h>
 
 
 using namespace std;
 class node;
+
+class node
+{
+private:
+	char elem;
+	int freq;//freq = 0 if a hypothetical joint node(inner node), used for sorting
+	node* parent; //itself if root
+	node* left;
+	node* right;
+
+
+public:
+node()
+{
+
+}
+node(char c, int f)
+{
+	elem = c;
+	freq = f;//if = 0 then is an inner node
+}
+node(node* p, node* l, node* r,char c, int f)
+{
+	parent = p;
+	left = l;
+	right = r;
+	elem = c;
+	freq = f;
+}
+void setLeft(node* l)
+{
+	left = l;
+}
+void setRight(node* r)
+{
+	right = r;
+}
+void setParent(node* p)
+{
+	parent = p;
+}
+node* getLeft()
+{
+	return left;
+}
+node* getRight()
+{
+	return right;
+}
+node* getParent()
+{
+	return parent;
+}
+int getFreq()
+{
+	return freq;
+}
+char getChar()
+{
+	return elem;
+}
+char getElem()
+{
+	return getChar();
+}
+
+
+
+
+
+};
 
 class trie
 {
@@ -25,10 +97,10 @@ public:
 		freq = new int[27];//last index is for spaces
 		nodeCount = 0;
 	}
-	void addNode(node add)
+	void addInitialNode(node add)
 	{
 
-		nodeCount++;
+		nodes.push_back(add);//do only if didnt add an inner node
 	}
 
 
@@ -78,77 +150,39 @@ public:
 			{
 				if(freq[i] == nextMin)
 				{
-					addNode(node());//FIX ARGUMENTS
+					//node temp = ;
+					addInitialNode(node(char(i + 97),freq[i]));
 					charsAdded++;
 				}
 			}
 			oldMin = nextMin;
-
 		}
+		///assign the correct parents and left/right.
+		for(i = 0; i < nodes.size();i++)
+		{
+			if((i + 1) / 2 >= 0)//has parent,allows truncation
+			{
+
+				int temp = ceil(i / 2 - 1);
+				node* temp2 = &nodes[temp];
+				nodes[i].setParent(temp2]);
+			}
+			if((i+1) * 2 - 1 < nodes.size()) // has left
+			{
+
+			}
+
+			if((i+1) * 2 < nodes.size())
+			{
+
+			}
+		}
+
+
 	}
 };
 
-class node
-{
-private:
-	char elem;
-	int freq;
-	node* parent; //itself if root
-	node* left;
-	node* right;
 
-
-public:
-node(node* p, node* l, node* r,char c, int f)
-{
-	parent = p;
-	left = l;
-	right = r;
-	elem = c;
-	freq = f;
-}
-void setLeft(node* l)
-{
-	left = l;
-}
-void setRight(node* r)
-{
-	right = r;
-}
-void setParent(node* p)
-{
-	parent = p;
-}
-node* getLeft()
-{
-	return left;
-}
-node* getRight()
-{
-	return right;
-}
-node* getParent()
-{
-	return parent;
-}
-int getFreq()
-{
-	return freq;
-}
-char getChar()
-{
-	return elem;
-}
-char getElem()
-{
-	return getChar();
-}
-
-
-}
-
-
-};
 
 
 int main (string fileName)
