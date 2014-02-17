@@ -133,7 +133,7 @@ public:
 			}
 		}
 
-		int charsAdded;
+		int charsAdded = 0;
 		int oldMin = 0;
 		int nextMin;
 		while(charsAdded != charsUsed)
@@ -162,21 +162,23 @@ public:
 		{
 			if((i + 1) / 2 >= 0)//has parent,allows truncation
 			{
-
-				int temp = ceil(i / 2 - 1);
-				node* temp2 = &nodes[temp];
-				nodes[i].setParent(temp2]);
+				node* temp = &nodes[ceil(i / 2 - 1)]
+				((node)nodes[i]).setParent(temp);
 			}
 			if((i+1) * 2 - 1 < nodes.size()) // has left
 			{
-
+				node* temp = &nodes[(i+1) * 2 - 1]
+				((node)nodes[i]).setLeft(temp);
 			}
 
 			if((i+1) * 2 < nodes.size())
 			{
-
+				node* temp = &nodes[(i+1) * 2]
+				((node)nodes[i]).setRight(temp);
 			}
 		}
+
+		//now reorder 2 min, and repeat until list cleared
 
 
 	}
