@@ -1,5 +1,6 @@
-/*
- * huffmanencoding.cpp
+/* Project 2 - Huffman Encoding
+   Richard Waltman, Giovanni Finney-long
+   CS 130A, W14, UCSB, 2/18/14
 */
 #include <iostream>
 #include <stdio.h>
