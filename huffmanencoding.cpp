@@ -8,6 +8,7 @@
 #include <fstream>
 #include <algorithm>
 #include <math.h>
+#include <climits>
 
 
 using namespace std;
@@ -152,7 +153,7 @@ public:
 		int charsAdded = 0;
 		int oldMin = 0;
 		int nextMin;
-		while(charsAdded != charsUsed)
+		while(charsAdded != charsUsed)//Builds the vector sorted by freq and then by ASCII
 		{
 			nextMin = INT_MAX;
 			for(i = 0; i < 27; i++)
@@ -182,9 +183,9 @@ public:
 
 			while(i < nodes.size() - 1)
 			{
-				temp = ((node)node[i]).getFreq() + ((node)node[i]).getFreq();
+				temp = ((node)nodes[i]).getFreq() + ((node)nodes[i]).getFreq();
 				offset = 0;
-				while(temp > ((node)node[i+offset]).getFreq())
+				while(temp > ((node)nodes[i+offset]).getFreq())
 				{
 					offset++;
 
