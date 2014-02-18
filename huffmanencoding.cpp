@@ -88,7 +88,7 @@ class trie
 {
 private:
 	string input;//The string which is used to set the architecture of the trie
-	int freq[];
+	int* freq;
 	int nodeCount;
 	vector<node> nodes;
 public:
@@ -106,32 +106,48 @@ public:
 
 	void setInput(string fileName)
 	{
-		int i;
+		unsigned i;
 		ifstream read;
-		read.open((char*)fileName, ifstream::in);
-		getline(read,fileName, '\n');
+		read.open(fileName.c_str(), ifstream::in); //converts string to cstring to match parameter of open()
+		getline(read, fileName, '\n');
 		transform(fileName.begin(), fileName.end(), fileName.begin(), ::tolower);
 		int charsUsed = 0;
 		int newChar;
 		int iBuf;
-		for(i = 0; i < fileName.length();i++)
+
+		// C++11 range-based loop (makes things simple and easy)
+		// Reads one char at a time from string until '\n' and places them in c
+		for(char& c : fileName)
 		{
-			iBuf = (int)fileName.substr()(i,1) - 97;
-			if(iBuf == 32)//is a space
+			cout << c; //to read out the entire line for debugging purposes
+			iBuf = c - 97; //c holds ASCII value already even as char, compiler knows this
+			if(iBuf == -65) //is a space (32 - 97). 32 is ASCII for 'space', 97 is ASCII for 'a'
 			{
-				if(!(++freq[26] - 1))//if freq[index] == 1
+				freq[26]++;
+				if(freq[26] == 1) //check for unique space char used
 				{
 					charsUsed++;
 				}
 			}
 			else
 			{
-				if(!(++freq[iBuf] - 1))//if freq[index] == 1
+				freq[iBuf]++;
+				if(freq[iBuf] == 1)
 				{
-					charsUsed++;
+					charsUsed++; //check for unique letters used
 				}
 			}
 		}
+		cout << endl;
+
+		for (i = 0; i < 27; i++) //cout the character frequency array for easy checking
+		{
+			if (freq[i] > 0)
+			{
+				cout << "Letter '" << char(i + 97) << "' has freq: " << freq[i] << endl;
+			}
+		}
+		cout << endl; // end of cout for easy checking
 
 		int charsAdded = 0;
 		int oldMin = 0;
@@ -157,18 +173,41 @@ public:
 			}
 			oldMin = nextMin;
 		}
+
+		if(nodes.size() > 1)
+		{
+			i = 0;
+			auto start = nodes.begin();
+			int temp,offset;
+
+			while(i < nodes.size() - 1)
+			{
+				temp = ((node)node[i]).getFreq() + ((node)node[i]).getFreq();
+				offset = 0;
+				while(temp > ((node)node[i+offset]).getFreq())
+				{
+					offset++;
+
+				}
+				node tempNode = node('\n',((node)nodes[i]).getFreq() + ((node)nodes[i+1]).getFreq());
+				nodes.insert(start+i+offset,tempNode);
+				i+=2;
+			}
+		}
+		//if i is last element, then is already sorted
+
 		///assign the correct parents and left/right.
 		for(i = 0; i < nodes.size();i++)
 		{
 			if((i + 1) / 2 >= 0)//has parent,allows truncation
 			{
-				node* temp = &nodes[ceil(i / 2 - 1)]
-				((node)nodes[i]).setParent(temp);
+				node* tempN = &nodes[ceil(i / 2 - 1)]
+				((node)nodes[i]).setParent(tempN);
 			}
 			if((i+1) * 2 - 1 < nodes.size()) // has left
 			{
-				node* temp = &nodes[(i+1) * 2 - 1]
-				((node)nodes[i]).setLeft(temp);
+				node* tempN = nodes[(i+1) * 2 - 1]
+			   ((node)nodes[i]).setLeft(tempN);
 			}
 
 			if((i+1) * 2 < nodes.size())
@@ -178,10 +217,8 @@ public:
 			}
 		}
 
-		//now reorder 2 min, and repeat until list cleared
 
 
-	}
 };
 
 
