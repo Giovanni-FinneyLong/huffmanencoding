@@ -110,19 +110,19 @@ public:
 	{
 		unsigned i;
 		ifstream read;
+		string fileLine;
 		read.open(fileName.c_str(), ifstream::in); //converts string to cstring to match parameter of open()
-		getline(read, fileName, '\n');
-		transform(fileName.begin(), fileName.end(), fileName.begin(), ::tolower);
+		getline(read, fileLine, '\n'); //fileLine becomes the string line that was read
+		transform(fileLine.begin(), fileLine.end(), fileLine.begin(), ::tolower);
 		int charsUsed = 0;
 		int newChar;
 		int iBuf;
 
-		// C++11 range-based loop (makes things simple and easy)
-		// Reads one char at a time from string until '\n' and places them in c
-		for(char& c : fileName)
+		//Reads one character at a time into *it until end of string
+		for(string::iterator it = fileLine.begin(); it != fileLine.end(); ++it)
 		{
-			cout << c; //to read out the entire line for debugging purposes
-			iBuf = c - 97; //c holds ASCII value already even as char, compiler knows this
+			cout << *it; //to read out the entire line for debugging purposes
+			iBuf = *it - 97; //*it holds ASCII value already even as char, compiler knows this
 			if(iBuf == -65) //is a space (32 - 97). 32 is ASCII for 'space', 97 is ASCII for 'a'
 			{
 				freq[26]++;
