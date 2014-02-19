@@ -34,6 +34,9 @@ node(char c, int f)
 {
 	elem = c;
 	freq = f;//if = 0 then is an inner node
+	parent = 0;
+	left = 0;
+	right = 0;
 }
 node(node* p, node* l, node* r,char c, int f)
 {
@@ -80,11 +83,8 @@ char getElem()
 	return getChar();
 }
 
-
-
-
-
 };
+
 
 class trie
 {
