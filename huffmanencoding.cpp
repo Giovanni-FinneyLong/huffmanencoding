@@ -93,6 +93,8 @@ private:
 	int* freq;
 	int nodeCount;
 	vector<node> nodes;
+	node* root;
+
 public:
 	trie()
 	{
@@ -179,7 +181,7 @@ public:
 		if(nodes.size() > 1)
 		{
 			i = 0;
-			auto start = nodes.begin();
+			vector<node>::iterator start = nodes.begin();
 			int temp,offset;
 
 			while(i < nodes.size() - 1)
@@ -203,24 +205,46 @@ public:
 		{
 			if((i + 1) / 2 >= 0)//has parent,allows truncation
 			{
-				node* tempN = &nodes[ceil(i / 2 - 1)]
-				((node)nodes[i]).setParent(tempN);
+				node* tempN = &nodes[ceil(i / 2 - 1)];
+				//((node)nodes[i])->setParent(tempN);
 			}
 			if((i+1) * 2 - 1 < nodes.size()) // has left
 			{
-				node* tempN = nodes[(i+1) * 2 - 1]
-			   ((node)nodes[i]).setLeft(tempN);
+				node* tempN = &nodes[(i+1) * 2 - 1];
+			   //((node)nodes[i])->setLeft(tempN);
 			}
 
 			if((i+1) * 2 < nodes.size())
 			{
-				node* temp = &nodes[(i+1) * 2]
-				((node)nodes[i]).setRight(temp);
+				node* temp = &nodes[(i+1) * 2];
+				//((node)nodes[i])->setRight(temp);
 			}
 		}
 
+		string decodeIn;
+				string decodeOut;
+				while(!read.eof())
+				{
+					getline(read, decodeIn, '\n');
+					decodeOut = "";
+					node* cur = root;
+					for(i = 0;i < decodeIn.size(); i++)
+					{
+					/*if(decodeIn.substr(i,1).equals("0"))
+						{
+							if (cur->getLeft() != NULL)
+							{
+
+							}
+						}
+					 	*/
+					}
 
 
+
+
+				}
+	}
 };
 
 
@@ -228,7 +252,8 @@ public:
 
 int main (string fileName)
 {
-
+	node test = node();
+	cout << test.getLeft() << endl;
 	return 0;
 }
 
